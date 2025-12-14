@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Qr Code Generator</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.4.4/qrcode.js"
+      integrity="sha512-oxrVyBhqnzQ0BzuM0A/6dEIk0alz0p4SpDRaWvtuUoarIc8rnL5lVniHG5Dp21MRFojcQcmKHjaskNXhSaUPPw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-stone-100">
+    <div
+      class="lg:w-3/5 w-[80%] mx-auto bg-slate-300 mt-14 text-center py-5 px-6 rounded-xl shadow-lg"
+    >
+      <h1 class="text-4xl font-bold mb-6 text-slate-100">Qr Code Generator</h1>
+      <!--  -->
+      <div class="w-full flex justify-between items-start lg:flex-nowrap flex-wrap lg:gap-1 gap-4">
+        <div class="lg:w-1/2 w-full text-left border-2 p-3 border-gray-500 rounded-lg">
+          <h1 class="mb-2.5 text-slate-600 underline">Enter your url:</h1>
+          <input type="text" id="QRInp" class="w-full focus:outline-none py-1 px-2 rounded-md border-2 border-gray-400" />
+        </div>
+        <div class="lg:w-1/2 w-full text-left border-2 p-3 border-gray-500 rounded-lg">
+          <div class="border-2 border-slate-400 w-full  overflow-hidden rounded-lg mb-3">
+            <img id="QRDisplay" class="w-full rounded-lg"  src="./my-qr-code.png" />
+          </div>
+          <div class="flex gap-2">
+            <button class="w-1/2 bg-slate-500 text-slate-200 py-2 rounded-lg cursor-pointer transition-all ease-in-out hover:shadow-lg hover:font-bold" id="QRGeneate">Generate</button>
+            <button class="w-1/2 bg-slate-500 text-slate-200 py-2 rounded-lg cursor-pointer transition-all ease-in-out hover:shadow-lg hover:font-bold" id="QRDownload">Download</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const QRInp = document.getElementById("QRInp");
+      const QRGeneate = document.getElementById("QRGeneate");
+      const QRDisplay = document.getElementById("QRDisplay");
+      const QRDownload = document.getElementById("QRDownload");
+
+      let qrURL = "";
+
+      QRGeneate.addEventListener("click", () => {
+        const QRC = QRCode.toDataURL(QRInp.value).then((data) => {
+          QRDisplay.src = data;
+          qrURL = data;
+        });
+      });
+      QRDownload.addEventListener("click", () => {
+        const link = document.createElement("a");
+        link.href = qrURL;
+        link.download = "my-qr-code.png";
+        link.click();
+      });
+    </script>
+  </body>
+</html>
